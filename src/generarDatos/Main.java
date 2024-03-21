@@ -15,10 +15,11 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
+        long startTimeDataGeneration = System.nanoTime(); // Measure start time for data generation
         List<JSONObject> registros = new ArrayList<>();
 
         Random random = new Random();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 1500000; i++) {
             int year = random.nextInt(2024 - 1950 + 1) + 1950;
             int month = random.nextInt(12) + 1;
             int day = random.nextInt(28) + 1;
@@ -32,6 +33,14 @@ public class Main {
             registros.add(registro);
         }
 
+        long endTimeDataGeneration = System.nanoTime(); // Measure end time for data generation
+        long durationDataGeneration = (endTimeDataGeneration - startTimeDataGeneration) / 1_000_000; // Time in milliseconds
+        long durationHours = durationDataGeneration / (60 * 60 * 1000);
+        long durationMinutes = (durationDataGeneration % (60 * 60 * 1000)) / (60 * 1000);
+        long durationSeconds = (durationDataGeneration % (60 * 1000)) / 1000;
+        String formattedTime = String.format("%02d:%02d:%02d", durationHours, durationMinutes, durationSeconds);
+        System.out.println("Data generation time: " + formattedTime);
+
         try {
             // Get the current directory where the Java file is located
             Path currentPath = Paths.get(System.getProperty("user.dir"));
@@ -44,6 +53,20 @@ public class Main {
             fileWriter.write(jsonArray.toJSONString());
             fileWriter.flush();
             fileWriter.close();
+
+            // Measure start time for data processing
+            long startTimeDataProcessing = System.nanoTime();
+
+            // Data processing logic (AVL tree construction, etc.) would go here
+
+            // Measure end time for data processing
+            long endTimeDataProcessing = System.nanoTime();
+            long durationDataProcessing = (endTimeDataProcessing - startTimeDataProcessing) / 1_000_000; // Time in milliseconds
+            long processingHours = durationDataProcessing / (60 * 60 * 1000);
+            long processingMinutes = (durationDataProcessing % (60 * 60 * 1000)) / (60 * 1000);
+            long processingSeconds = (durationDataProcessing % (60 * 1000)) / 1000;
+            formattedTime = String.format("%02d:%02d:%02d", processingHours, processingMinutes, processingSeconds);
+            System.out.println("Data processing time: " + formattedTime);
         } catch (IOException e) {
             e.printStackTrace();
         }
