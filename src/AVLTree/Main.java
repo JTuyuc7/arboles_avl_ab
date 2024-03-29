@@ -4,11 +4,19 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
 import java.io.*;
 import java.util.Iterator;
 
-// Main class
+/**
+ * Main class for constructing AVL tree from JSON data and writing ordered data to a file.
+ */
 public class Main {
+
+    /**
+     * Main method to read JSON data, construct AVL tree, and write ordered data to a file.
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         try {
             long startTime = System.nanoTime(); // Measure start time
@@ -21,10 +29,12 @@ public class Main {
             AVLTree tree = new AVLTree();
             Iterator<JSONObject> iterator = jsonArray.iterator();
 
-            //# Calcular la memoria
+            // Calculate memory usage before constructing AVL tree
             Runtime runtime = Runtime.getRuntime();
             runtime.gc();
             long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
+
+            // Insert JSON objects into AVL tree
             while (iterator.hasNext()) {
                 JSONObject obj = iterator.next();
                 String carnet = (String) obj.get("carnet");
@@ -59,7 +69,11 @@ public class Main {
         }
     }
 
-    // Human readable memory
+    /**
+     * Formats memory usage in a human-readable format.
+     * @param bytes The memory usage in bytes.
+     * @return A string representing memory usage in a human-readable format.
+     */
     private static String formatMemoryUsage(long bytes) {
         if (bytes < 1024) {
             return bytes + " bytes";
@@ -70,19 +84,5 @@ public class Main {
         } else {
             return String.format("%.2f GB", bytes / (1024.0 * 1024 * 1024));
         }
-    }
-
-    // Method to measure memory usage
-    private static long measureMemoryUsage() {
-        Runtime runtime = Runtime.getRuntime();
-        runtime.gc(); // Run garbage collection to clean up memory
-        long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
-        // Construct a temporary object to force memory allocation
-        long[] temp = new long[10_000];
-        long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
-        // Deallocate temporary object
-        temp = null;
-        runtime.gc(); // Run garbage collection to clean up memory
-        return memoryAfter - memoryBefore;
     }
 }

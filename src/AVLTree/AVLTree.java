@@ -1,35 +1,43 @@
 package AVLTree;
 
 import org.json.simple.JSONObject;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 
-// AVL Tree class
+/**
+ * AVL Tree class for storing key-value pairs in a balanced binary search tree.
+ */
 public class AVLTree {
     AVLNode root;
 
-    // Get height of a node
+    /**
+     * Method to get the height of a node.
+     * @param N The node whose height is to be determined.
+     * @return The height of the node. Returns 0 if the node is null.
+     */
     int height(AVLNode N) {
         if (N == null)
             return 0;
-//        System.out.println("altura" + N.height);
         return N.height;
     }
 
-    // Get balance factor of a node
+    /**
+     * Method to get the balance factor of a node.
+     * @param N The node for which balance factor is to be calculated.
+     * @return The balance factor of the node. Returns 0 if the node is null.
+     */
     int getBalance(AVLNode N) {
         if (N == null)
             return 0;
-        int balance = height(N.left) - height(N.right);
-        //! Mostrar que el balance puede ser 1,0 o -1 para que este balanceado
-//        System.out.println("balance" + balance);
         return height(N.left) - height(N.right);
     }
 
-    // Right rotate subtree rooted with y
+    /**
+     * Right rotate subtree rooted with y.
+     * @param y The root of the subtree to be rotated.
+     * @return The new root after rotation.
+     */
     AVLNode rightRotate(AVLNode y) {
-//        System.out.printf("Y.left--" +  height(y.right));
         AVLNode x = y.left;
         AVLNode T2 = x.right;
 
@@ -42,7 +50,11 @@ public class AVLTree {
         return x;
     }
 
-    // Left rotate subtree rooted with x
+    /**
+     * Left rotate subtree rooted with x.
+     * @param x The root of the subtree to be rotated.
+     * @return The new root after rotation.
+     */
     AVLNode leftRotate(AVLNode x) {
         AVLNode y = x.right;
         AVLNode T2 = y.left;
@@ -56,7 +68,13 @@ public class AVLTree {
         return y;
     }
 
-    // Insert a node
+    /**
+     * Method to insert a node into the AVL Tree.
+     * @param node The root of the subtree where insertion is to be done.
+     * @param key The key of the node to be inserted.
+     * @param obj The JSON object associated with the key to be inserted.
+     * @return The root of the modified subtree after insertion.
+     */
     AVLNode insert(AVLNode node, int key, JSONObject obj) {
         if (node == null)
             return (new AVLNode(key, obj));
@@ -68,8 +86,7 @@ public class AVLTree {
         else // Duplicate keys not allowed
             return node;
 
-        node.height = 1 + Math.max(height(node.left),
-                height(node.right));
+        node.height = 1 + Math.max(height(node.left), height(node.right));
 
         int balance = getBalance(node);
 
@@ -96,7 +113,12 @@ public class AVLTree {
         return node;
     }
 
-    // Inorder traversal of the tree
+    /**
+     * Inorder traversal of the AVL Tree.
+     * @param node The root of the subtree to be traversed.
+     * @param writer The BufferedWriter object to write the traversal results.
+     * @throws IOException If an I/O error occurs while writing.
+     */
     void inorder(AVLNode node, BufferedWriter writer) throws IOException {
         if (node != null) {
             inorder(node.left, writer);
@@ -105,6 +127,12 @@ public class AVLTree {
         }
     }
 
+    /**
+     * Method to write JSON objects in the AVL Tree to a BufferedWriter in a sorted order.
+     * @param node The root of the subtree to be traversed.
+     * @param writer The BufferedWriter object to write the JSON objects.
+     * @throws IOException If an I/O error occurs while writing.
+     */
     void writeJSON(AVLNode node, BufferedWriter writer) throws IOException {
         if (node != null) {
             writeJSON(node.left, writer);
