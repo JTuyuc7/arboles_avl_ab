@@ -1,0 +1,42 @@
+Resumen realizado en March 30 2024 a las 03:05 PM
+Tipo de orden: Binario Simple
+Memoria usada: 179.01 MB
+Tiempo de ejecucion: 00 horas: 00 minutos: 02 segundos
+Cantidad de elementos ordenados: 300000
+**********************************************************
+Resumen realizado en March 30 2024 a las 03:06 PM
+Tipo de orden: AVL
+Memoria usada: 9.12 MB usados
+Tiempo de ejecucion: 00 horas: 00 minutos: 03 segundos
+Cantidad de elementos ordenados: 300000
+**********************************************************
+Resumen realizado en March 30 2024 a las 03:11 PM
+Tipo de orden: Binario Simple
+Memoria usada: 179.00 MB
+Tiempo de ejecucion: 00 horas: 00 minutos: 02 segundos
+Cantidad de elementos ordenados: 300000
+**********************************************************
+Resumen realizado en March 30 2024 a las 05:06 PM
+Tipo de orden: AVL
+Memoria usada: 22.85 MB usados
+Tiempo de ejecucion: 00 horas: 00 minutos: 08 segundos
+Cantidad de elementos ordenados: 750000
+**********************************************************
+Resumen realizado en March 30 2024 a las 05:07 PM
+Tipo de orden: Binario Simple
+Memoria usada: 447.24 MB
+Tiempo de ejecucion: 00 horas: 00 minutos: 07 segundos
+Cantidad de elementos ordenados: 750000
+**********************************************************
+Resumen realizado en March 30 2024 a las 05:12 PM
+Tipo de orden: Binario Simple
+Memoria usada: 179.00 MB
+Tiempo de ejecucion: 00 horas: 00 minutos: 02 segundos
+Cantidad de elementos ordenados: 300000
+**********************************************************
+Resumen realizado en March 30 2024 a las 05:12 PM
+Tipo de orden: AVL
+Memoria usada: 9.12 MB usados
+Tiempo de ejecucion: 00 horas: 00 minutos: 02 segundos
+Cantidad de elementos ordenados: 300000
+**********************************************************

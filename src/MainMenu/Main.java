@@ -20,7 +20,8 @@ public class Main {
             System.out.println("3. Salir");
 
             // Prompt user for choice
-            System.out.print("Ingrese su opcion: ");
+            System.out.println("Ingrese su opcion: ");
+            System.out.println("------------------------------------------------------------------------------");
             int choice = scanner.nextInt();
             //! Generate data
             GenerateData generateData = new GenerateData();
@@ -48,7 +49,7 @@ public class Main {
                     }
                     break;
                 case 3:
-                    System.out.println("Exiting...");
+                    System.out.println("Guardando datos...");
                     exit = true; // Set exit flag to true
                     break;
                 default:
