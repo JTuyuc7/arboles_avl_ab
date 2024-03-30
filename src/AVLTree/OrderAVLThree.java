@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import utils.Statistics;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -42,6 +43,7 @@ public class OrderAVLThree {
             long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
 
             // Insert JSON objects into AVL tree based on "carnet" field
+            System.out.println("Ordenando datos...");
             while (iterator.hasNext()) {
                 JSONObject obj = iterator.next();
                 String carnet = (String) obj.get("carnet");
@@ -51,9 +53,10 @@ public class OrderAVLThree {
             long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
             // Measure memory usage after constructing AVL tree
             long memoryUsed = memoryAfter - memoryBefore;
-            System.out.println(formatMemoryUsage(memoryUsed));
+            String formattedMemory = formatMemoryUsage((memoryUsed));
+//            System.out.println(formattedMemory);
 
-            File folder = new File(currentPath.toFile(), "ordenados");
+            File folder = new File(currentPath.toFile(), "AVLOrder");
             if (!folder.exists()) {
                 folder.mkdir(); // Create the "ordenados" folder if it doesn't exist
             }
@@ -67,15 +70,17 @@ public class OrderAVLThree {
             writer.write("]");
             writer.close();
 
-            System.out.println("Datos ordenados y guardados en ordenados/" + fileName);
             long endTime = System.nanoTime(); // Measure end time
             long durationSeconds = (endTime - startTime) / 1_000_000_000;
             long hours = durationSeconds / 3600;
             long minutes = (durationSeconds % 3600) / 60;
             long seconds = durationSeconds % 60;
 
-            String formattedTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-            System.out.println("Tiempo tomado: " + formattedTime);
+            String formattedTime = String.format("%02d horas: %02d minutos: %02d segundos", hours, minutes, seconds);
+//            System.out.println("Tiempo tomado: " + formattedTime);
+            Statistics statistics = new Statistics(jsonArray.size(), "AVL", formattedMemory, formattedTime);
+            statistics.generateReport();
+            System.out.println("--------------------------------------DONE-------------------------------------");
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
@@ -89,13 +94,13 @@ public class OrderAVLThree {
      */
     private static String formatMemoryUsage(long bytes) {
         if (bytes < 1024) {
-            return bytes + " bytes";
+            return bytes + " bytes usados";
         } else if (bytes < 1024 * 1024) {
-            return String.format("%.2f KB", bytes / 1024.0);
+            return String.format("%.2f KB usados", bytes / 1024.0);
         } else if (bytes < 1024 * 1024 * 1024) {
-            return String.format("%.2f MB", bytes / (1024.0 * 1024));
+            return String.format("%.2f MB usados", bytes / (1024.0 * 1024));
         } else {
-            return String.format("%.2f GB", bytes / (1024.0 * 1024 * 1024));
+            return String.format("%.2f GB usados", bytes / (1024.0 * 1024 * 1024));
         }
     }
 }

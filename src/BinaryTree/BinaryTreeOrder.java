@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import utils.Statistics;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -77,33 +78,37 @@ public class BinaryTreeOrder {
         long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
 
         try  {
-//            Path currentPath = Paths.get(System.getProperty("user.dir"));
             String filePath = currentPath.resolve("registros").resolve(fileName).toString();
             FileReader reader = new FileReader(filePath);
             Object obj = parser.parse(reader);
             JSONArray jsonArray = (JSONArray) obj;
+            System.out.println("Ordenando datos...");
             for (Object o : jsonArray) {
                 JSONObject jsonObject = (JSONObject) o;
                 String key = (String) jsonObject.get("carnet");
                 insert(key, jsonObject);
             }
-            System.out.println("Data has been read from file: " + fileName);
+            runtime.gc();
+            long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
+            // Measure memory usage after constructing AVL tree
+            long memoryUsed = memoryAfter - memoryBefore;
+            String memoryUsedFormatted = formatMemoryUsage(memoryUsed);
+//        System.out.println(formatMemoryUsage(memoryUsed)+" Memoria usada.");
+            long endTime = System.nanoTime(); // Measure end time
+            long durationSeconds = (endTime - startTime) / 1_000_000_000;
+            long hours = durationSeconds / 3600;
+            long minutes = (durationSeconds % 3600) / 60;
+            long seconds = durationSeconds % 60;
+
+            String formattedTime = String.format("%02d horas: %02d minutos: %02d segundos", hours, minutes, seconds);
+
+            Statistics statistics = new Statistics(jsonArray.size(), "Binario Simple", memoryUsedFormatted, formattedTime);
+            statistics.generateReport();
+            System.out.println("--------------------------------------DONE-------------------------------------");
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-        runtime.gc();
-        long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
-        // Measure memory usage after constructing AVL tree
-        long memoryUsed = memoryAfter - memoryBefore;
-        System.out.println(formatMemoryUsage(memoryUsed)+" Memoria usada.");
-        long endTime = System.nanoTime(); // Measure end time
-        long durationSeconds = (endTime - startTime) / 1_000_000_000;
-        long hours = durationSeconds / 3600;
-        long minutes = (durationSeconds % 3600) / 60;
-        long seconds = durationSeconds % 60;
 
-        String formattedTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-        System.out.println("En tiempo de: " + formattedTime);
     }
 
     /**
