@@ -1,5 +1,6 @@
 package MainMenu;
 import AVLTree.OrderAVLThree;
+import BinaryTree.BinaryTreeOrder;
 import generarDatos.GenerateData;
 import utils.CustomReturn;
 import utils.Submenus;
@@ -25,6 +26,7 @@ public class Main {
             GenerateData generateData = new GenerateData();
             Submenus submenu = new Submenus();
             OrderAVLThree avlThree = new OrderAVLThree();
+            BinaryTreeOrder binaryTree = new BinaryTreeOrder();
             // Handle user's choice
             switch (choice) {
                 case 1:
@@ -37,6 +39,10 @@ public class Main {
                     CustomReturn optionsSelected = submenu.getOrderThreeOption(scanner);
                     System.out.println(optionsSelected.getFileName());
                     System.out.println(optionsSelected.getFileOrder());
+                    if(optionsSelected.getFileOrder() == 1){
+                        binaryTree.readDataFromFile(optionsSelected.getFileName());
+                        binaryTree.writeOrderedDataToFile(optionsSelected.getFileName());
+                    }
                     if( optionsSelected.getFileOrder() == 2){
                         avlThree.orderAVLThree(optionsSelected.getFileName());
                     }

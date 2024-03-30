@@ -20,6 +20,7 @@ public class AVLTree {
     int height(AVLNode N) {
         if (N == null)
             return 0;
+//        System.out.println(N.height + "altura??");
         return N.height;
     }
 
@@ -32,6 +33,8 @@ public class AVLTree {
     int getBalance(AVLNode N) {
         if (N == null)
             return 0;
+        int altura = height(N.left) - height(N.right);
+//        System.out.println(altura + "altura");
         return height(N.left) - height(N.right);
     }
 
