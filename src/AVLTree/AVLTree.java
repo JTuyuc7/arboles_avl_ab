@@ -1,6 +1,7 @@
 package AVLTree;
 
 import org.json.simple.JSONObject;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 
@@ -12,6 +13,7 @@ public class AVLTree {
 
     /**
      * Method to get the height of a node.
+     *
      * @param N The node whose height is to be determined.
      * @return The height of the node. Returns 0 if the node is null.
      */
@@ -23,6 +25,7 @@ public class AVLTree {
 
     /**
      * Method to get the balance factor of a node.
+     *
      * @param N The node for which balance factor is to be calculated.
      * @return The balance factor of the node. Returns 0 if the node is null.
      */
@@ -34,6 +37,7 @@ public class AVLTree {
 
     /**
      * Right rotate subtree rooted with y.
+     *
      * @param y The root of the subtree to be rotated.
      * @return The new root after rotation.
      */
@@ -52,6 +56,7 @@ public class AVLTree {
 
     /**
      * Left rotate subtree rooted with x.
+     *
      * @param x The root of the subtree to be rotated.
      * @return The new root after rotation.
      */
@@ -70,18 +75,20 @@ public class AVLTree {
 
     /**
      * Method to insert a node into the AVL Tree.
+     *
      * @param node The root of the subtree where insertion is to be done.
-     * @param key The key of the node to be inserted.
-     * @param obj The JSON object associated with the key to be inserted.
+     * @param key  The key of the node to be inserted.
+     * @param obj  The JSON object associated with the key to be inserted.
      * @return The root of the modified subtree after insertion.
      */
-    AVLNode insert(AVLNode node, int key, JSONObject obj) {
+    AVLNode insert(AVLNode node, String key, JSONObject obj) {
         if (node == null)
             return (new AVLNode(key, obj));
 
-        if (key < node.key)
+        int compareResult = key.compareTo(node.key); // Compare keys as strings
+        if (compareResult < 0)
             node.left = insert(node.left, key, obj);
-        else if (key > node.key)
+        else if (compareResult > 0)
             node.right = insert(node.right, key, obj);
         else // Duplicate keys not allowed
             return node;
@@ -91,21 +98,21 @@ public class AVLTree {
         int balance = getBalance(node);
 
         // Left Left Case
-        if (balance > 1 && key < node.left.key)
+        if (balance > 1 && key.compareTo(node.left.key) < 0)
             return rightRotate(node);
 
         // Right Right Case
-        if (balance < -1 && key > node.right.key)
+        if (balance < -1 && key.compareTo(node.right.key) > 0)
             return leftRotate(node);
 
         // Left Right Case
-        if (balance > 1 && key > node.left.key) {
+        if (balance > 1 && key.compareTo(node.left.key) > 0) {
             node.left = leftRotate(node.left);
             return rightRotate(node);
         }
 
         // Right Left Case
-        if (balance < -1 && key < node.right.key) {
+        if (balance < -1 && key.compareTo(node.right.key) < 0) {
             node.right = rightRotate(node.right);
             return leftRotate(node);
         }
@@ -115,7 +122,8 @@ public class AVLTree {
 
     /**
      * Inorder traversal of the AVL Tree.
-     * @param node The root of the subtree to be traversed.
+     *
+     * @param node   The root of the subtree to be traversed.
      * @param writer The BufferedWriter object to write the traversal results.
      * @throws IOException If an I/O error occurs while writing.
      */
@@ -129,7 +137,8 @@ public class AVLTree {
 
     /**
      * Method to write JSON objects in the AVL Tree to a BufferedWriter in a sorted order.
-     * @param node The root of the subtree to be traversed.
+     *
+     * @param node   The root of the subtree to be traversed.
      * @param writer The BufferedWriter object to write the JSON objects.
      * @throws IOException If an I/O error occurs while writing.
      */

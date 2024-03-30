@@ -6,26 +6,33 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
 
 /**
  * Main class for constructing AVL tree from JSON data and writing ordered data to a file.
  */
-public class Main {
+public class OrderAVLThree {
 
     /**
-     * Main method to read JSON data, construct AVL tree, and write ordered data to a file.
-     * @param args Command-line arguments (not used).
+     * Main method to read JSON data, construct AVL tree based on the "carnet" field,
+     * and write ordered data to a file.
+     *
+     * @param fileName The name of the JSON file to process.
      */
-    public static void main(String[] args) {
+    public void orderAVLThree(String fileName) {
         try {
+            Path currentPath = Paths.get(System.getProperty("user.dir"));
             long startTime = System.nanoTime(); // Measure start time
+
+            String filePath = currentPath.resolve("registros").resolve(fileName).toString();
             // Read JSON file
-            FileReader reader = new FileReader("registros.json");
+            FileReader reader = new FileReader(filePath);
             JSONParser parser = new JSONParser();
             JSONArray jsonArray = (JSONArray) parser.parse(reader);
 
-            // Construct AVL Tree
+            // Construct AVL Tree based on "carnet" field
             AVLTree tree = new AVLTree();
             Iterator<JSONObject> iterator = jsonArray.iterator();
 
@@ -34,12 +41,11 @@ public class Main {
             runtime.gc();
             long memoryBefore = runtime.totalMemory() - runtime.freeMemory();
 
-            // Insert JSON objects into AVL tree
+            // Insert JSON objects into AVL tree based on "carnet" field
             while (iterator.hasNext()) {
                 JSONObject obj = iterator.next();
                 String carnet = (String) obj.get("carnet");
-                int keyValue = carnet.hashCode(); // Using hashCode as the key
-                tree.root = tree.insert(tree.root, keyValue, obj);
+                tree.root = tree.insert(tree.root, carnet, obj); // Using "carnet" as the key
             }
             runtime.gc();
             long memoryAfter = runtime.totalMemory() - runtime.freeMemory();
@@ -47,15 +53,21 @@ public class Main {
             long memoryUsed = memoryAfter - memoryBefore;
             System.out.println(formatMemoryUsage(memoryUsed));
 
+            File folder = new File(currentPath.toFile(), "ordenados");
+            if (!folder.exists()) {
+                folder.mkdir(); // Create the "ordenados" folder if it doesn't exist
+            }
+            File file = new File(folder, fileName);
+
             // Write ordered data to a file as a JSON array
-            FileWriter fw = new FileWriter("output.json");
+            FileWriter fw = new FileWriter(file);
             BufferedWriter writer = new BufferedWriter(fw);
             writer.write("[\n");
             tree.writeJSON(tree.root, writer);
             writer.write("]");
             writer.close();
 
-            System.out.println("Data ordered and written to output.json successfully.");
+            System.out.println("Datos ordenados y guardados en ordenados/" + fileName);
             long endTime = System.nanoTime(); // Measure end time
             long durationSeconds = (endTime - startTime) / 1_000_000_000;
             long hours = durationSeconds / 3600;
@@ -71,6 +83,7 @@ public class Main {
 
     /**
      * Formats memory usage in a human-readable format.
+     *
      * @param bytes The memory usage in bytes.
      * @return A string representing memory usage in a human-readable format.
      */
