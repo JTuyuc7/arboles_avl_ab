@@ -75,7 +75,7 @@ public class OrderAVLThree {
             long seconds = durationSeconds % 60;
 
             String formattedTime = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-            System.out.println("Time taken: " + formattedTime);
+            System.out.println("Tiempo tomado: " + formattedTime);
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
