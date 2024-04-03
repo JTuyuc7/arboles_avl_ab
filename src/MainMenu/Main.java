@@ -1,5 +1,5 @@
 package MainMenu;
-import AVLTree.OrderAVLThree;
+import AVLTree.OrderAVLTree;
 import BinaryTree.BinaryTreeOrder;
 import generarDatos.GenerateData;
 import utils.CustomReturn;
@@ -26,7 +26,7 @@ public class Main {
             //! Generate data
             GenerateData generateData = new GenerateData();
             Submenus submenu = new Submenus();
-            OrderAVLThree avlThree = new OrderAVLThree();
+            OrderAVLTree avlThree = new OrderAVLTree();
             BinaryTreeOrder binaryTree = new BinaryTreeOrder();
             // Handle user's choice
             switch (choice) {
@@ -45,7 +45,7 @@ public class Main {
                         binaryTree.writeOrderedDataToFile(optionsSelected.getFileName());
                     }
                     if( optionsSelected.getFileOrder() == 2){
-                        avlThree.orderAVLThree(optionsSelected.getFileName());
+                        avlThree.orderAVLTree(optionsSelected.getFileName());
                     }
                     break;
                 case 3:

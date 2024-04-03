@@ -14,7 +14,7 @@ import java.util.Iterator;
 /**
  * Main class for constructing AVL tree from JSON data and writing ordered data to a file.
  */
-public class OrderAVLThree {
+public class OrderAVLTree {
 
     /**
      * Main method to read JSON data, construct AVL tree based on the "carnet" field,
@@ -22,7 +22,7 @@ public class OrderAVLThree {
      *
      * @param fileName The name of the JSON file to process.
      */
-    public void orderAVLThree(String fileName) {
+    public void orderAVLTree(String fileName) {
         try {
             Path currentPath = Paths.get(System.getProperty("user.dir"));
             long startTime = System.nanoTime(); // Measure start time

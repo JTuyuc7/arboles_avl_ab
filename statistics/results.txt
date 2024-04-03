@@ -40,3 +40,15 @@ Memoria usada: 9.12 MB usados
 Tiempo de ejecucion: 00 horas: 00 minutos: 02 segundos
 Cantidad de elementos ordenados: 300000
 **********************************************************
+Resumen realizado en April 3 2024 a las 12:40 AM
+Tipo de orden: AVL
+Memoria usada: 1.51 MB usados
+Tiempo de ejecucion: 00 horas: 00 minutos: 01 segundos
+Cantidad de elementos ordenados: 50000
+**********************************************************
+Resumen realizado en April 3 2024 a las 12:54 AM
+Tipo de orden: Binario Simple
+Memoria usada: 179.00 MB
+Tiempo de ejecucion: 00 horas: 00 minutos: 02 segundos
+Cantidad de elementos ordenados: 300000
+**********************************************************
